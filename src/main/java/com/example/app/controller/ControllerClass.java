@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.app.dto.PersonDto;
+import com.example.app.dto.UpdatePersonDto;
+import com.example.app.exception.PersonException;
 import com.example.app.service.PersonService;
 
 @Controller
@@ -35,6 +38,50 @@ public class ControllerClass {
 		
 		return  new ResponseEntity<String>(result, HttpStatus.CREATED);
 		
+	}
+	
+	
+	
+	@RequestMapping(path="/update/user", method= RequestMethod.PUT, consumes = {"application/json"})
+	public ResponseEntity<UpdatePersonDto> upddatePersonName(@RequestBody  UpdatePersonDto updateDto) {
+		   
+		
+		   // PersonService
+		   try {
+			     pService.updateNameService(updateDto);
+		} catch (PersonException e) {
+			// TODO: handle exception
+			throw new   RuntimeException(e.getMessage());
+		}
+		     
+		     
+		System.out.println(updateDto.toString());
+		     
+		       
+		return new ResponseEntity<UpdatePersonDto>(updateDto, HttpStatus.ACCEPTED);
+	}
+	
+	
+	
+	@RequestMapping(path="/delete/user", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deletPersonConteroller(@RequestParam("personId") Integer id){
+		
+		
+		System.out.println(id);
+		
+		// person service  --
+		// delete person  --
+		try {
+			
+			String result = pService.deletePersonService(id);
+			
+			return new ResponseEntity<String>(result, HttpStatus.ACCEPTED);
+		} catch (PersonException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+		}
+		
+	
 	}
 
 }
