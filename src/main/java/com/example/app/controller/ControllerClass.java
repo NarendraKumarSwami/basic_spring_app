@@ -1,9 +1,12 @@
 package com.example.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.app.dto.PersonDto;
 import com.example.app.dto.UpdatePersonDto;
 import com.example.app.exception.PersonException;
+import com.example.app.model.Person;
 import com.example.app.service.PersonService;
 
 @Controller
@@ -83,5 +87,53 @@ public class ControllerClass {
 		
 	
 	}
+	
+	
+	@RequestMapping(path="/users", method = RequestMethod.GET)
+	public ResponseEntity<List<Person>> getAllPerson(){
+		
+       
+		// 
+	 List<Person> list =	pService.getAllPersonService();
+		
+		return new ResponseEntity<List<Person>>(list, HttpStatus.ACCEPTED);
+	}
+
+	
+	@RequestMapping(path="/users/range", method = RequestMethod.GET)
+	public ResponseEntity<List<Person>>  getAllPersonWithRange(Integer start, Integer end){
+		    
+		
+	  List<Person> persons;
+	try {
+		persons = pService.getAllPersonRangeService(start, end);
+		return ResponseEntity.ok(persons);
+	} catch (PersonException e) {
+		// TODO Auto-generated catch block
+		 throw new RuntimeException(e.getMessage());
+	}
+		
+		
+	}
+
+	@RequestMapping(path="/users/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Person> getPersonController(@PathVariable("id") Integer id){
+    	
+
+	   try {
+		Person p =	pService.getPerson(id);
+		
+		return ResponseEntity.ok(p);
+	} catch (PersonException e) {
+		// TODO Auto-generated catch block
+		  throw new RuntimeException(e.getMessage());
+	}
+		
+    	
+    	
+    }
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.app.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,71 @@ public class PersonServiceImp  implements PersonService{
 	      }else
 	    	  throw new PersonException("Person with id : "+ id +" don't exits");
 	}
+
+
+
+
+
+	@Override
+	public List<Person> getAllPersonService() {
+		// TODO Auto-generated method stub
+		
+		// list of person 
+		// person repository
+		
+		 List<Person>  p =  (List<Person >) pRepo.findAll();
+		
+		
+		return p;
+	}
+
+
+
+
+
+	@Override
+	public Person getPerson(Integer id) throws PersonException {
+		// TODO Auto-generated method stub
+		
+		
+		 // person repository
+		
+	  return 	pRepo.findById(id).orElseThrow(() ->  new PersonException("Person with id : "+ id +" don't exits"));
+		
+		
+		
+	}
+
+
+
+
+
+	
+	
+	
+	
+	@Override
+	public List<Person> getAllPersonRangeService(Integer start, Integer end) throws PersonException {
+		// TODO Auto-generated method stub
+		
+		
+	   Optional<List<Person>> opt =   pRepo.findwithRange(start, end);
+	 
+	    
+	    if(opt.isPresent() && opt.get().size() != 0) {
+	    
+		return  opt.get();
+				
+	    }else 
+	    	throw new PersonException("there is no person in this range"+start + " " + end);
+
+		 
+	  
+		
+	}
+	
+	
+	
 
 	
 	
