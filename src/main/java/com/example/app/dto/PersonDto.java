@@ -2,13 +2,22 @@ package com.example.app.dto;
 
 import org.springframework.stereotype.Component;
 
-@Component
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+
 public class PersonDto {
 	
-	
+	  
+	 @NotBlank(message= "{name.blank}")
+	 @NotNull(message="{name.null}")
+	 @NotEmpty(message="{name.empty}")
 	 private String name;
 	 
 	 
+	 @Min(value = 18, message = "age should be greater than 18")
 	 private Integer age;
 	 
 	 

@@ -1,6 +1,6 @@
 package com.example.app.exception;
 
-public class PersonException  extends Exception {
+public class PersonException  extends RuntimeException {
 	
 	
 	

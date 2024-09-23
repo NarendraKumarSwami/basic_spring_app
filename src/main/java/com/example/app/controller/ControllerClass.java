@@ -18,6 +18,8 @@ import com.example.app.exception.PersonException;
 import com.example.app.model.Person;
 import com.example.app.service.PersonService;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class ControllerClass {
 	
@@ -35,7 +37,7 @@ public class ControllerClass {
 	
 	
 	@RequestMapping(path="/user", method = RequestMethod.POST,consumes = {"application/json"})
-    public ResponseEntity<String> postUserController(@RequestBody PersonDto  person) {
+    public ResponseEntity<String> postUserController(@Valid   @RequestBody PersonDto  person) {
 		
 		
 		  String result =  pService.addPersonService(person);
@@ -104,14 +106,9 @@ public class ControllerClass {
 	public ResponseEntity<List<Person>>  getAllPersonWithRange(Integer start, Integer end){
 		    
 		
-	  List<Person> persons;
-	try {
-		persons = pService.getAllPersonRangeService(start, end);
+	  List<Person> persons = pService.getAllPersonRangeService(start, end);
 		return ResponseEntity.ok(persons);
-	} catch (PersonException e) {
-		// TODO Auto-generated catch block
-		 throw new RuntimeException(e.getMessage());
-	}
+	
 		
 		
 	}
@@ -120,20 +117,17 @@ public class ControllerClass {
     public ResponseEntity<Person> getPersonController(@PathVariable("id") Integer id){
     	
 
-	   try {
+	  
 		Person p =	pService.getPerson(id);
 		
 		return ResponseEntity.ok(p);
-	} catch (PersonException e) {
-		// TODO Auto-generated catch block
-		  throw new RuntimeException(e.getMessage());
-	}
-		
+	
     	
     	
     }
 
 
 
+	
 
 }
