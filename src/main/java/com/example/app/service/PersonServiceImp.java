@@ -38,6 +38,9 @@ public class PersonServiceImp  implements PersonService{
 		
 		// save the person using the method from PersonRepository
 		Person p1 = pRepo.save(p);
+		
+		
+		          
 		  
 		
 		if(p1 != null) {
@@ -189,6 +192,22 @@ public class PersonServiceImp  implements PersonService{
 		 
 	  
 		
+	}
+
+
+
+
+
+	@Override
+	public List<Person> findPersonsByName(String name) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		// 
+		
+		
+		return pRepo.findPersonsByName(name).get();
 	}
 	
 	

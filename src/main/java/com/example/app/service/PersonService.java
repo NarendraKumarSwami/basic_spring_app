@@ -25,6 +25,8 @@ public interface PersonService {
 	
 	
 	public Person getPerson(Integer id) throws PersonException;
+
+	public List<Person> findPersonsByName(String name);
 	
 	
 	

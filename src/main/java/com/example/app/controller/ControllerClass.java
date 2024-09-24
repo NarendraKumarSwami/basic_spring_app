@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,10 +49,10 @@ public class ControllerClass {
 	
 	
 	
-	@RequestMapping(path="/update/user", method= RequestMethod.PUT, consumes = {"application/json"})
-	public ResponseEntity<UpdatePersonDto> upddatePersonName(@RequestBody  UpdatePersonDto updateDto) {
+	@RequestMapping(path="/update/user", params= {"myValue!=suman"},  method= RequestMethod.PUT, consumes = {"application/json"})
+	public ResponseEntity<UpdatePersonDto> upddatePersonName(@RequestBody  UpdatePersonDto updateDto, @RequestParam String myValue) {
 		   
-		
+		    System.out.println(myValue);
 		   // PersonService
 		   try {
 			     pService.updateNameService(updateDto);
@@ -127,7 +128,16 @@ public class ControllerClass {
     }
 
 
-
+    @GetMapping("/users/search")
+    public ResponseEntity<List<Person>> getPersonsByName(@RequestParam("name") String name){
+	 
+	
+    	
+    	// service layer 
+    	;
+	 
+	 return new ResponseEntity(pService.findPersonsByName(name), HttpStatus.OK);
+     }
 	
 
 }
