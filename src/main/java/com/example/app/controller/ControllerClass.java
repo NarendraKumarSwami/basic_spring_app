@@ -31,8 +31,8 @@ public class ControllerClass {
 	
 	
 	@RequestMapping(path="/home", method = RequestMethod.GET)
-	public String getMessage() {
-		return "welcome.html";
+	public ResponseEntity<String> getMessage() {
+		return new ResponseEntity<String>("welcome to the application", HttpStatus.CREATED);
 		
 	}
 	
