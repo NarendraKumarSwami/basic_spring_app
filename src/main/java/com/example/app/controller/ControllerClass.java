@@ -37,6 +37,13 @@ public class ControllerClass {
 	}
 	
 	
+	@RequestMapping(path="/about", method = RequestMethod.GET)
+	public ResponseEntity<String> getMessage1() {
+		return new ResponseEntity<String>("welcome to the about page", HttpStatus.CREATED);
+		
+	}
+	
+	
 	@RequestMapping(path="/user", method = RequestMethod.POST,consumes = {"application/json"})
     public ResponseEntity<String> postUserController(@Valid   @RequestBody PersonDto  person) {
 		

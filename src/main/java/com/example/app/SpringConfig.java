@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -20,11 +21,23 @@ public class SpringConfig {
 		
 		 return    http.csrf(csrf -> csrf.disable())
 			     .authorizeHttpRequests(authRequest -> {
-			    	 authRequest.requestMatchers("/home").permitAll();
+			    	 authRequest.requestMatchers("/home", "/signup", "/signin").permitAll();
+			    	 authRequest.requestMatchers("/about").authenticated();
+			    	 authRequest.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN");
 			     }).formLogin(Customizer.withDefaults()).build();
 			     
 			     
 			     
 	}
+	
+	
+	
+	@Bean
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	
+	
 
 }
