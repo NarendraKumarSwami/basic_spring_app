@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.app.dto.LoginDto;
 import com.example.app.dto.UserDto;
+import com.example.app.jwt.JwtService;
 import com.example.app.service.UserService;
 
 @RestController
 public class UserController {
+	
+	
+	@Autowired
+	public JwtService jwtService;
 
 	 @Autowired
 	 public UserService userService;
@@ -29,7 +34,13 @@ public class UserController {
 	 public ResponseEntity<Boolean> signinController(@RequestBody LoginDto userDto){
 		   
 	  boolean result =	 userService.signinService(userDto);
+	  
+	  // token 
+		 String token =  jwtService.generateToken(userDto.email);
 		 
-		 return new ResponseEntity(result, HttpStatus.CREATED);
+		 
+		 return ResponseEntity.ok()
+				      .header("Authorization", "Bearer "+ token)
+				      .body(result);
 	 }
 }
