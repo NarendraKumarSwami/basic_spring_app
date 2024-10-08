@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +18,7 @@ import com.example.app.filter.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SpringConfig {
 	
 	@Autowired 
@@ -39,6 +40,7 @@ public class SpringConfig {
 			    	 authRequest.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN");
 			     }).sessionManagement(session -> session.disable())
 			     .authenticationProvider(authProvider())
+			     
 			     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 			     .build();
 			     
